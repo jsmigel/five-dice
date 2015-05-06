@@ -25,7 +25,7 @@ sub new {
     return $self;
 }
 
-sub validate {
+sub validateGame {
     my $self = shift;
     my $game = shift;
 
