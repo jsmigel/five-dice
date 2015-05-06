@@ -55,4 +55,20 @@ sub validateGame {
     return 1;
 }
 
+sub generateGame {
+    my $self = shift;
+
+    my $goal = int ( rand ( 6 ) ) + 1;
+    $goal *= 10;
+    $goal += int ( rand ( 6 ) ) + 1;
+
+    my @dice;
+
+    for ( my $i = 0; $i < $self->{diceCount}; $i++ ) {
+        push ( @dice, int ( rand ( 6 ) ) + 1 );
+    }
+
+    return { goal => $goal, dice => \@dice };
+}
+
 1;
