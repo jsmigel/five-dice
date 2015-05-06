@@ -27,6 +27,7 @@ sub new {
 
 sub validateGame {
     my $self = shift;
+
     my $game = shift;
 
     delete ( $self->{error} );
