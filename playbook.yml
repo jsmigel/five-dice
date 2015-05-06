@@ -1,0 +1,17 @@
+---
+  - name: Provision development environment
+    hosts: all
+    gather_facts: no
+    sudo: yes
+
+    tasks:
+      - name: Install EPEL
+        yum: name=http://fedora.mirrors.pair.com/epel/6/i386/epel-release-6-8.noarch.rpm state=present
+
+      - name: Install Perl and modules
+        yum: name={{item}} state=present
+        with_items:
+          - perl
+          - perl-Module-Build
+          - perl-Test-Simple
+          - perl-Devel-Cover
