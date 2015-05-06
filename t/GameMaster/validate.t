@@ -19,7 +19,7 @@ my @validGames = (
 );
 
 foreach my $game ( @validGames ) {
-    is ( $gm->validateGame ( $game ), 1, "Validate basic puzzle (expected failure)" );
+    is ( $gm->validateGame ( $game ), 1, "Validate basic puzzle" );
     is ( $gm->{error}, undef, "No errors" );
 }
 
