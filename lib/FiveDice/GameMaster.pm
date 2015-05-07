@@ -72,4 +72,89 @@ sub generateGame {
     return { goal => $goal, dice => \@dice };
 }
 
+sub validateSolution {
+    my $self = shift;
+
+    my $game = shift;
+    my $solution = shift;
+
+    delete $self->{error};
+
+    my $goal = $game->{goal};
+    my @gameDice = @{$game->{dice}};
+    my @solutionDice = @{$solution->{dice}};
+    my @solutionOperations = @{$solution->{operations}};
+
+    # Validate the number of dice against the game
+    unless ( @gameDice == @solutionDice ) {
+        $self->{error} = sprintf ( "Incorrect number of dice (found %d, expected %d)", @solutionDice, @gameDice );
+        return 0;
+    }
+
+    # Validate the number of operations (should be 1 less than the number of game dice)
+    unless ( @solutionOperations == ( @gameDice - 1 ) ) {
+        $self->{error} = sprintf ( "Incorrect number of operations (found %d, expected %d)", scalar @solutionOperations, ( @gameDice + 1 ) );
+        return 0;
+    }
+
+    # Implicity 'add' the first value
+    unshift ( @solutionOperations, "+" );
+    my $accumulator = 0;
+
+    # Run operation of each die
+    while ( my $nextDie = shift ( @solutionDice ) ) {
+        my $operation = shift ( @solutionOperations );
+
+        # Search for this die in the original game.  If it's not found, return an error.
+        # If it is found, remove it from the game.
+        my $found = 0;
+        for ( my $i = 0; $i <= $#gameDice; $i++ ) {
+            if ( $gameDice[$i] == $nextDie ) {
+                splice ( @gameDice, $i, 1 );
+                $found = 1;
+                last;
+            }
+        }
+
+        unless ( $found ) {
+            $self->{error} = sprintf ( "Could not find value %d in original game dice", $nextDie );
+            return 0;
+        }
+
+        if ( $operation eq "+" ) {
+            $accumulator += $nextDie;
+        }
+        elsif ( $operation eq "-" ) {
+            $accumulator -= $nextDie;
+        }
+        elsif ( $operation eq "*" ) {
+            $accumulator *= $nextDie;
+        }
+        elsif ( $operation eq "/" ) {
+            $accumulator /= $nextDie;
+        }
+        elsif ( $operation eq "^" ) {
+            $accumulator **= $nextDie;
+        }
+        else {
+            $self->{error} = sprintf ( "Unknown oeprator: %s", $operation );
+            return 0;
+        }
+    }
+
+    # If there are any unused game dice, this is not a valid solution
+    if ( @gameDice != 0 ) {
+        $self->{error} = sprintf ( "%d unused game dice found", scalar @gameDice );
+        return 0;
+    }
+
+    # Check the result of the operations
+    if ( $accumulator == $goal ) {
+        return 1;
+    }
+
+    $self->{error} = sprintf ( "Solution does not match goal (got %.2f, expected %d)", $accumulator, $goal );
+    return 0;
+}
+
 1;
