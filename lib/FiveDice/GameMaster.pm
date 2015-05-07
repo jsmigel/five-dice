@@ -25,6 +25,7 @@ sub new {
     return $self;
 }
 
+# Validate a generated game - make sure we have the correct number of dice, and sane values
 sub validateGame {
     my $self = shift;
 
@@ -56,6 +57,7 @@ sub validateGame {
     return 1;
 }
 
+# Generate a puzzle
 sub generateGame {
     my $self = shift;
 
@@ -72,6 +74,12 @@ sub generateGame {
     return { goal => $goal, dice => \@dice };
 }
 
+# Validate a solutions.  Checks the following
+#   - Same number of dice in the game and solution
+#   - Same dice values in game and solution (all dice used)
+#   - Corret number of operators (#dice - 1)
+#   - All valid operators
+#   - Solution == goal
 sub validateSolution {
     my $self = shift;
 
