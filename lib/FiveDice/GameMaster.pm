@@ -161,7 +161,6 @@ sub validateSolution {
         return 1;
     }
 
-    $self->{error} = sprintf ( "Solution does not match goal (got %.2f, expected %d)", $accumulator, $goal );
     return 0;
 }
 
