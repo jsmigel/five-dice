@@ -145,7 +145,7 @@ sub validateSolution {
             $accumulator **= $nextDie;
         }
         else {
-            $self->{error} = sprintf ( "Unknown oeprator: %s", $operation );
+            $self->{error} = sprintf ( "Unknown operator: %s", $operation );
             return 0;
         }
     }
