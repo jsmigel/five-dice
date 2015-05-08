@@ -95,7 +95,7 @@ sub validateSolution {
 
     # Validate the number of dice against the game
     unless ( @gameDice == @solutionDice ) {
-        $self->{error} = sprintf ( "Incorrect number of dice (found %d, expected %d)", @solutionDice, @gameDice );
+        $self->{error} = sprintf ( "Incorrect number of dice (found %d, expected %d)", scalar @solutionDice, scalar @gameDice );
         return 0;
     }
 
