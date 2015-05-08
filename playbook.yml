@@ -8,6 +8,9 @@
       - name: Install EPEL
         yum: name=http://fedora.mirrors.pair.com/epel/6/i386/epel-release-6-8.noarch.rpm state=present
 
+      - name: Install repoforge
+        yum: name=http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
+
       - name: Install Perl and modules
         yum: name={{item}} state=present
         with_items:
@@ -15,3 +18,4 @@
           - perl-Module-Build
           - perl-Test-Simple
           - perl-Devel-Cover
+          - perl-Algorithm-Combinatorics
