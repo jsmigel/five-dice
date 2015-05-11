@@ -19,3 +19,7 @@
           - perl-Test-Simple
           - perl-Devel-Cover
           - perl-Algorithm-Combinatorics
+          - git
+          - vim
+          - screen
+          - bash-completion
