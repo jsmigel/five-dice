@@ -8,11 +8,10 @@ sub new {
     $class = ref $class if ref $class;
 
     my $self = {
-        validOperators => [qw/ + - * \/ ^ /],
         @_
     };
 
-    my @parameters = qw/ game validOperators/;
+    my @parameters = qw/ game /;
 
     foreach my $required ( @parameters ) {
         unless ( defined ( $self->{$required} ) ) {
@@ -29,7 +28,7 @@ sub nextSolution {
     my $self = shift;
 
     unless ( defined ( $self->{operationIterator} ) ) {
-        $self->{operationIterator} = variations_with_repetition ( $self->{validOperators}, $#{$self->{game}->{dice}} );
+        $self->{operationIterator} = variations_with_repetition ( $self->{game}->{validOperators}, $#{$self->{game}->{dice}} );
         $self->{solutionOperators} = $self->{operationIterator}->next();
     }
 

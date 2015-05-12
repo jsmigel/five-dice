@@ -4,7 +4,7 @@ use Test::More;
 
 use FiveDice::SolutionFinder;
 
-my $game = { goal => 15, dice => [ 1, 2, 3, 4, 5 ] };
+my $game = { goal => 15, dice => [ 1, 2, 3, 4, 5 ], validOperators => [qw/ + - * \/ ^ /] };
 
 my $finder = FiveDice::SolutionFinder->new ( game => $game );
 

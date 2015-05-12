@@ -45,6 +45,8 @@ for ( my $i = 0; $i < 500; $i++ ) {
     foreach my $die ( @$dice ) {
         ok ( $die >= 1 && $die <= 6, "Individual die values are between 1-6" );
     }
+
+    is_deeply ( $game->{validOperators}, [qw/ + - * \/ ^ /] );
 }
 
 done_testing();

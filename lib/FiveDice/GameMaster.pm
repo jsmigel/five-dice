@@ -36,7 +36,7 @@ sub generateGame {
         push ( @dice, int ( rand ( 6 ) ) + 1 );
     }
 
-    return { goal => $goal, dice => \@dice };
+    return { goal => $goal, dice => \@dice, validOperators => [qw/ + - * \/ ^ /] };
 }
 
 # Validate a solutions.  Checks the following
