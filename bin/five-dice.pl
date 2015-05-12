@@ -15,10 +15,6 @@ while ( my $line = <STDIN> ) {
     }
     elsif ( $line =~ /^\[(\d+)\] (\d+) (\d+) (\d+) (\d+) (\d+)$/ ) {
         $game = { goal => $1, dice => [ $2, $3, $4, $5, $6 ] };
-        unless ( $gm->validateGame ( $game ) ) {
-            print $gm->{error} . "\n";
-            next;
-        }
     }
     else {
         print "Unrecognized game format\n\n";

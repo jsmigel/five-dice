@@ -6,16 +6,13 @@ sub new {
     $class = ref $class if ref $class;
 
     my $self = {
-        diceCount => 5,
-        maxDieValue => 6,
         @_
     };
 
-    my @parameters = qw/ diceCount maxDieValue /;
+    my @parameters = qw/ /;
 
     foreach my $required ( @parameters ) {
         unless ( defined ( $self->{$required} ) ) {
-            $self->{logger}->error ( "Required parameter '$required' is missing" );
             return undef;
         }
     }
@@ -23,38 +20,6 @@ sub new {
     bless $self, $class;
 
     return $self;
-}
-
-# Validate a generated game - make sure we have the correct number of dice, and sane values
-sub validateGame {
-    my $self = shift;
-
-    my $game = shift;
-
-    delete ( $self->{error} );
-
-    if ( $#{$game->{dice}} != ( $self->{diceCount}-1 ) ) {
-        $self->{error} = sprintf ( "Incorrect number of dice (found %d, expected %d)", ( $#{$game->{dice}}+1 ), $self->{diceCount} );
-        return 0;
-    }
-
-    foreach my $die ( @{$game->{dice}} ) {
-        if ( $die < 1 || $die > $self->{maxDieValue} ) {
-            $self->{error} = sprintf ( "Invalid dice value (found %d, expected 1-%d)", ( $die ), $self->{maxDieValue} );
-        }
-    }
-
-    if ( $game->{goal} % 10 < 1 || $game->{goal} % 10 > 6 ) {
-        $self->{error} = sprintf ( "Invalid goal: %d", $game->{goal} );
-        return 0;
-    }
-
-    if ( int ( $game->{goal} / 10 ) < 1 || int ( $game->{goal} / 10 ) > 6 ) {
-        $self->{error} = sprintf ( "Invalid goal: %d", $game->{goal} );
-        return 0;
-    }
-
-    return 1;
 }
 
 # Generate a puzzle
@@ -67,7 +32,7 @@ sub generateGame {
 
     my @dice;
 
-    for ( my $i = 0; $i < $self->{diceCount}; $i++ ) {
+    for ( my $i = 0; $i < 5; $i++ ) {
         push ( @dice, int ( rand ( 6 ) ) + 1 );
     }
 
